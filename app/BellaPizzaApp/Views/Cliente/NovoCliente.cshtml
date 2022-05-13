@@ -1,0 +1,44 @@
+﻿@model ClienteModel
+
+@{
+    ViewData["Title"] = "Novo Cliente";
+}
+
+<h2>Cadastrar novo cliente</h2>
+
+@using (Html.BeginForm())
+{
+  <div class="mb-3">
+      @Html.LabelFor(m => m.Id, htmlAttributes: new { @class="form-label" })
+      @Html.EditorFor(m => m.Id, new { htmlAttributes = new { @class="form-control"} })
+  </div>
+
+  <div class="mb-3">
+      @Html.LabelFor(m => m.Nome, htmlAttributes: new { @class="form-label" })
+      @Html.EditorFor(m => m.Nome, new { htmlAttributes = new { @class="form-control"} })
+  </div>
+
+  <div class="mb-3">
+      @Html.LabelFor(m => m.Telefone, htmlAttributes: new { @class="form-label" })
+      @Html.EditorFor(m => m.Telefone, new { htmlAttributes = new { @class="form-control"} })
+  </div>
+
+  <div class="mb-3">
+      @Html.LabelFor(m => m.Bairro, htmlAttributes: new { @class="form-label" })
+      @Html.EditorFor(m => m.Bairro, new { htmlAttributes = new { @class="form-control"} })
+  </div>
+
+  <div class="mb-3">
+      @Html.LabelFor(m => m.Cidade, htmlAttributes: new { @class="form-label" })
+      @Html.EditorFor(m => m.Cidade, new { htmlAttributes = new { @class="form-control"} })
+  </div>
+
+  <div class="mb-3">
+      @Html.LabelFor(m => m.Uf, htmlAttributes: new { @class="form-label" })
+      @Html.EditorFor(m => m.Uf, new { htmlAttributes = new { @class="form-control"} })
+  </div>
+
+  <button type="submit" class="btn btn-primary">Salvar</button>
+}
+
+

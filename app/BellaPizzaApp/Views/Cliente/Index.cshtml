@@ -1,9 +1,15 @@
-﻿@{
+﻿@model ICollection<ClienteModel>
+
+@{
     ViewData["Title"] = "Cadastro Clientes";
 }
 
 <h1>Cadastro de Clientes</h1>
 <p>Lista de clientes para delivery</p>
+
+<p>
+    @Html.ActionLink("Novo", "NovoCliente")
+</p>
 
 <table class="table">
   <thead>
@@ -16,26 +22,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Joao da Silva</td>
-      <td>(11) 91234-5631</td>
-      <td>Centro</td>
-      <td>Jundiai/SP</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Maria Joaquina</td>
-      <td>(11) 95323-2222</td>
-      <td>Medeiros</td>
-      <td>Jundiai/SP</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Joao Jau</td>
-      <td>(11) 91221-0011</td>
-      <td>Jd Santa Clara</td>
-      <td>Jau/SP</td>
-    </tr>
+        @foreach (var cliente in Model)
+        {
+            <tr>
+              <th scope="row">@Html.DisplayFor(m => cliente.Id)</th>
+              <td>@Html.DisplayFor(m => cliente.Nome)</td>
+              <td>@Html.DisplayFor(m => cliente.Telefone)</td>
+              <td>@Html.DisplayFor(m => cliente.Bairro)</td>
+              <td>@Html.DisplayFor(m => cliente.Cidade)/@Html.DisplayFor(m => cliente.Uf)</td>
+            </tr>
+        }
   </tbody>
 </table>
