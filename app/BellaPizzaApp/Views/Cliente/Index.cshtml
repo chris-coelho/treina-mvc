@@ -1,4 +1,4 @@
-﻿@model ICollection<ClienteModel>
+﻿@model ICollection<ListaClienteViewModel>
 
 @{
     ViewData["Title"] = "Cadastro Clientes";
@@ -25,11 +25,11 @@
         @foreach (var cliente in Model)
         {
             <tr>
-              <th scope="row">@Html.DisplayFor(m => cliente.Id)</th>
+              <th scope="row">@Html.DisplayFor(m => cliente.Codigo)</th>
               <td>@Html.DisplayFor(m => cliente.Nome)</td>
               <td>@Html.DisplayFor(m => cliente.Telefone)</td>
               <td>@Html.DisplayFor(m => cliente.Bairro)</td>
-              <td>@Html.DisplayFor(m => cliente.Cidade)/@Html.DisplayFor(m => cliente.Uf)</td>
+              <td>@Html.DisplayFor(m => cliente.Localidade)</td>
             </tr>
         }
   </tbody>

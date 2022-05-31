@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BellaPizzaApp.Models;
+using System.Linq;
 
 namespace BellaPizzaApp.Controllers
 {
@@ -26,7 +27,21 @@ namespace BellaPizzaApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_clientes);
+            var lista = new List<ListaClienteViewModel>();
+
+            foreach (var cliente in _clientes)
+            {
+                lista.Add(new ListaClienteViewModel
+                {
+                    Codigo = cliente.Id,
+                    Nome = cliente.Nome,
+                    Telefone = cliente.Telefone,
+                    Bairro = cliente.Bairro,
+                    Localidade = $"{cliente.Cidade}/{ cliente.Uf}"
+                });
+            }
+
+            return View(lista);
         }
 
         [HttpGet]
@@ -37,12 +52,26 @@ namespace BellaPizzaApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult NovoCliente(ClienteModel cliente)
+        public IActionResult NovoCliente(ClienteModel clienteModel)
         {
-            // Incluir o cliente na lista 
-            _clientes.Add(cliente);
+            if (!ModelState.IsValid)
+                return View();
 
-            // Voltar para a lista contendo o cliente que eu inclui
+            if (_clientes.FirstOrDefault(x => x.Id == clienteModel.Id) != null)
+            {
+                ModelState.AddModelError("Id", $"Id {clienteModel.Id} já existe");
+                return View();
+            }
+
+            var palavras = clienteModel.Nome.Trim().Split(' ');
+            if (palavras.Length <= 1)
+            {
+                ModelState.AddModelError("Nome", "Nome deve conter o sobrenome");
+                return View();
+            }
+
+            _clientes.Add(clienteModel);
+
             return RedirectToAction("Index");
         }
     }

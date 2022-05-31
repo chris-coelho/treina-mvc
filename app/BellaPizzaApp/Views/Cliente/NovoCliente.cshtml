@@ -11,11 +11,13 @@
   <div class="mb-3">
       @Html.LabelFor(m => m.Id, htmlAttributes: new { @class="form-label" })
       @Html.EditorFor(m => m.Id, new { htmlAttributes = new { @class="form-control"} })
+      @Html.ValidationMessageFor(m => m.Id, "", new {@class =  "text-danger"})
   </div>
 
   <div class="mb-3">
       @Html.LabelFor(m => m.Nome, htmlAttributes: new { @class="form-label" })
       @Html.EditorFor(m => m.Nome, new { htmlAttributes = new { @class="form-control"} })
+      @Html.ValidationMessageFor(m => m.Nome, "", new {@class =  "text-danger"})
   </div>
 
   <div class="mb-3">
