@@ -1,6 +1,6 @@
 ﻿namespace BellaPizzaApp.Models
 {
-    public class ListaClienteViewModel
+    public class ClienteViewModel
     {
         public int Codigo { get; set; }
         public string Nome { get; set; }
