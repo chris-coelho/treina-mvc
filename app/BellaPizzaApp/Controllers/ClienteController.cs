@@ -1,48 +1,49 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System.Linq;
 
 using BellaPizzaApp.Models;
+using BellaPizzaApp.Services;
 
 namespace BellaPizzaApp.Controllers
 {
     public class ClienteController : Controller
     {
-        private static ICollection<ClienteModel> _clientes;
+        private readonly ClienteService _service;
 
         public ClienteController()
         {
-            if (_clientes != null)
-                return;
-
-            _clientes = new List<ClienteModel>();
-
-            _clientes.Add(new ClienteModel { Id = 1, Nome = "Joao do Teste", Telefone = "(16) 91234-4321", Bairro = "Centro", Cidade = "Araraquara", Uf = "SP" });
-            _clientes.Add(new ClienteModel { Id = 2, Nome = "Maria Antonieta", Telefone = "(16) 91234-1234", Bairro = "Centro", Cidade = "Araraquara", Uf = "SP" });
-            _clientes.Add(new ClienteModel { Id = 3, Nome = "Camila", Telefone = "(11) 91234-1111", Bairro = "Eloy Chaves", Cidade = "Jundiai", Uf = "SP" });
-            _clientes.Add(new ClienteModel { Id = 4, Nome = "Lucas", Telefone = "(16) 91234-2222", Bairro = "Centro", Cidade = "Araraquara", Uf = "SP" });
-            _clientes.Add(new ClienteModel { Id = 5, Nome = "Cristovao", Telefone = "(11) 91234-3333", Bairro = "Medeiros", Cidade = "Jundiai", Uf = "SP" });
+            _service = new ClienteService();
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_clientes);
+            return View( _service.ObterListaClientes() );
         }
 
         [HttpGet]
         public IActionResult NovoCliente()
         {
-            var novoCliente = new ClienteModel();
-            return View(novoCliente);
+            return View(new NovoClienteViewModel());
         }
 
         [HttpPost]
-        public IActionResult NovoCliente(ClienteModel cliente)
+        public IActionResult NovoCliente(NovoClienteViewModel viewModel)
         {
-            // Incluir o cliente na lista 
-            _clientes.Add(cliente);
+            if (!ModelState.IsValid)
+                return View();
 
-            // Voltar para a lista contendo o cliente que eu inclui
+            var result = _service.AdicionarCliente(viewModel);
+            if (!result.Success)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Field, error.Message);
+                }
+
+                return View();
+            }
+
             return RedirectToAction("Index");
         }
     }
