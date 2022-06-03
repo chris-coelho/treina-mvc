@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using BellaPizzaApp.Models;
 
@@ -21,6 +22,26 @@ namespace BellaPizzaApp.Repositories
             _clientes.Add(new ClienteModel { Id = 5, Nome = "Cristovao", Telefone = "(11) 91234-3333", Bairro = "Medeiros", Cidade = "Jundiai", Uf = "SP" });
         }
 
+        public ClienteModel GetById(int id)
+        {
+            /* Usando foreach
+            ClienteModel clienteExistente = null;
+
+            foreach (var cliente in _clientes)
+            {
+                if (cliente.Id == id)
+                {
+                    clienteExistente = cliente;
+                }
+            }
+
+            return clienteExistente;
+            */
+
+            // Usando LINQ
+            return _clientes.FirstOrDefault( x => x.Id == id );
+        }
+
         public ICollection<ClienteModel> GetAll()
         {
             return _clientes;
@@ -29,6 +50,20 @@ namespace BellaPizzaApp.Repositories
         public void Add(ClienteModel cliente)
         {
             _clientes.Add(cliente);
+        }
+
+        public void Update(ClienteModel cliente)
+        {
+            var clienteExistente = _clientes.FirstOrDefault(x => x.Id == cliente.Id);
+            
+            if (clienteExistente != null)
+            {
+                clienteExistente.Nome = cliente.Nome;
+                clienteExistente.Telefone = cliente.Telefone;
+                clienteExistente.Bairro = cliente.Bairro;
+                clienteExistente.Cidade = cliente.Cidade;
+                clienteExistente.Uf = cliente.Uf;
+            }
         }
 
     }

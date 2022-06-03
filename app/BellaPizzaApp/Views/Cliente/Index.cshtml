@@ -30,6 +30,7 @@
               <td>@Html.DisplayFor(m => cliente.Telefone)</td>
               <td>@Html.DisplayFor(m => cliente.Bairro)</td>
               <td>@Html.DisplayFor(m => cliente.Localidade)</td>
+              <td>@Html.ActionLink("Alterar", "AlterarCliente", new { id = cliente.Codigo })</td>
             </tr>
         }
   </tbody>
